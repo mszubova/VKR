@@ -28,9 +28,17 @@ export default {
 </script>
 
 <style>
+html{
+  overflow-x: hidden;
+}
 .navMenu{
   width: 100%;
-  position: fixed;
+  position: absolute;
   top: 4vh;
+}
+.mainContainer{
+  position: relative;
+  height: 87vh;
+  top:13vh;
 }
 </style>
