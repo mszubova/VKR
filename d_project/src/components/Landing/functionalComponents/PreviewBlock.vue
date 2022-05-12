@@ -115,7 +115,7 @@ canvas{
 .imagePrev{
   position: relative;
   float: right;
-  right: 25vh;
+  right: 22vh;
   top: 5vh;
 }
 

@@ -36,7 +36,7 @@ export default {
     },
     methods:{
         navBlockButtonClick(adress){
-            console.log(adress)
+            this.emitter.emit("NewPage", adress)
         }
     },
     create:{
