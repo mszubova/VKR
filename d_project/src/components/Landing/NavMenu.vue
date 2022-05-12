@@ -87,7 +87,7 @@ export default {
     top: 1.5vh;
 }
 
-button, button::after {
+.GlobalLogicButtonLk, .GlobalLogicButtonLk::after {
     width: 300px;
     height: 50px;
     font-size: 24px;
@@ -101,7 +101,7 @@ button, button::after {
     position: relative;
 }
 
-button::after {
+.GlobalLogicButtonLk::after {
   --slice-0: inset(50% 50% 50% 50%);
   --slice-1: inset(80% -6px 0 0);
   --slice-2: inset(50% -6px 30% 0);
@@ -121,7 +121,7 @@ button::after {
   clip-path: var(--slice-0);
 }
 
-button:hover::after {
+.GlobalLogicButtonLk:hover::after {
   animation: 1s glitch;
   animation-timing-function: steps(2, end);
 }
