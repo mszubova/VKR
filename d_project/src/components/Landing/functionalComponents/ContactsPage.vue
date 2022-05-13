@@ -1,5 +1,8 @@
 <template>
-  <div class="contactsRoot"></div>
+  <div class="contactsRoot">
+      <img src="https://c.tenor.com/UrFUiHzahxMAAAAd/meme.gif"/>
+        <h1>3</h1>
+  </div>
 </template>
 
 <script>

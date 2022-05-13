@@ -15,7 +15,7 @@
           <h2 class="dsTl">комплекса кластеризации усилий. </h2>
         </div>
         <div class="order">
-          <button class="makeOrderBtn">Сделать заказ</button>
+          <button class="makeOrderBtn">Оставить заявку</button>
         </div>
     </div>
       <div class="canvas" v-if="previewMediaVisible">
@@ -95,7 +95,7 @@ function supportThreeCheck(canvas){
   top: 10%;
   font-family: 'Rubik', 'sans-serif';
   font-style: italic;
-  font-weight: 400;
+  font-weight: light;
   font-size: 10pt;
   line-height: 24px;
   letter-spacing: 0.04em;
