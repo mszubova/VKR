@@ -49,7 +49,7 @@ export default {
 .rightPart{
     position: relative;
     float: right;
-    right: 9%;
+    right: 6vw
 }
 .navTitles{
     font-size: 24px;
@@ -58,7 +58,9 @@ export default {
     color: white;
 }
 .navList{
-    display: table-cell;
+  position: relative;
+  left: 4vw;
+  display: table-cell;
 }
 .leftPart{
     margin-left: 22%;
@@ -67,7 +69,7 @@ export default {
 }
 .LogoContainer{
     position: absolute;
-    left: 7%;
+    left: 10vw;
     top: 20%;
 }
 .NavLogo:hover{
@@ -86,7 +88,9 @@ export default {
     position: relative;
     top: 1.5vh;
 }
-
+.lkButton:hover{
+  cursor: pointer;
+}
 .GlobalLogicButtonLk, .GlobalLogicButtonLk::after {
     width: 300px;
     height: 50px;
@@ -100,7 +104,9 @@ export default {
     outline: transparent;
     position: relative;
 }
-
+.GlobalLogicButtonLk:hover{
+  cursor: pointer;
+}
 .GlobalLogicButtonLk::after {
   --slice-0: inset(50% 50% 50% 50%);
   --slice-1: inset(80% -6px 0 0);

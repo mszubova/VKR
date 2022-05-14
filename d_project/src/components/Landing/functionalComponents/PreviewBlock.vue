@@ -2,18 +2,19 @@
   <div class="previewRoot">
     <div class="title">
       <div class="raindowTitle">
-        <h2 class="rnbTl">Мы вынуждены отталкиваться от того, что реализация </h2>
-        <h2 class="rnbTl">намеченных плановых</h2>
+        <h2 class="rnbTl">PROGRESS center - это агенство </h2>
+        <h2 class="rnbTl">комплексного маркетинга</h2>
       </div>
       <div class="descript">
-          <h2 class="dsTl">Многие известные личности заблокированы в рамках </h2>
-          <h2 class="dsTl">своих собственных рациональных ограничений!</h2>
-          <h2 class="dsTl">Мы вынуждены отталкиваться от того, что </h2>
-          <h2 class="dsTl">убеждённость некоторых оппонентов создаёт</h2> 
-          <h2 class="dsTl">необходимость включения в производственный план</h2> 
+          <h2 class="dsTl">Мы разрабатываем названия, логотипы и фирменные стили. </h2>
+          <h2 class="dsTl">Делаем лендинги и сайты. Оформляем и ведём соцсети. </h2>
+          <h2 class="dsTl">Другими словами, помогаем хорошим проектам выглядеть</h2>
+          <h2 class="dsTl"> ещё лучше.</h2> 
+          <!-- <h2 class="dsTl">необходимость включения в производственный план</h2> 
           <h2 class="dsTl">целого ряда внеочередных мероприятий с учётом </h2>
-          <h2 class="dsTl">комплекса кластеризации усилий. </h2>
+          <h2 class="dsTl">комплекса кластеризации усилий. </h2> -->
         </div>
+        
         <div class="order">
           <button class="makeOrderBtn">Оставить заявку</button>
         </div>
@@ -67,7 +68,7 @@ function supportThreeCheck(canvas){
 .title{
   position: relative;
   float: left;
-  left: 7%;
+  left: 10vw;
   top: 15vh;
 }
 .rnbTl{
@@ -80,10 +81,10 @@ function supportThreeCheck(canvas){
   font-family: 'Nunito', 'sans-serif';
   font-style: normal;
   font-weight: 700;
-  font-size: 13pt;
+  font-size: 16pt;
   align-items: center;
   line-height: 1.7em;
-
+  letter-spacing: 0.9pt;
   background: linear-gradient(90.67deg, #A953D1 5.17%, #53B3D1 64.6%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -91,15 +92,15 @@ function supportThreeCheck(canvas){
   text-fill-color: transparent;
 }
 .descript{
-  margin-top: 10%;
-  top: 10%;
-  font-family: 'Rubik', 'sans-serif';
-  font-style: italic;
-  font-weight: light;
+  position: relative;
+  margin-top: 9% ;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
   font-size: 10pt;
-  line-height: 24px;
+  line-height: 27pt;
   letter-spacing: 0.04em;
-
+  letter-spacing: 1pt;
   color: #FFFFFF;
 }
 .canvas{
@@ -115,16 +116,17 @@ canvas{
 .imagePrev{
   position: relative;
   float: right;
-  right: 22vh;
+  right: 5vw;
   top: 5vh;
 }
-
 .makeOrderBtn{
     text-align: center;
     position: relative;
-    top: 1.5vh;
+    top: 1.2vh;
 }
-
+.makeOrderBtn{
+  cursor: pointer;
+}
 .makeOrderBtn, .makeOrderBtn::after {
     width: 300px;
     height: 50px;
