@@ -1,1 +1,3 @@
-export default function(){}
+export function checkLoginAndPass(){
+    return true
+}

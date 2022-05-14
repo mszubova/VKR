@@ -10,9 +10,6 @@
           <h2 class="dsTl">Делаем лендинги и сайты. Оформляем и ведём соцсети. </h2>
           <h2 class="dsTl">Другими словами, помогаем хорошим проектам выглядеть</h2>
           <h2 class="dsTl"> ещё лучше.</h2> 
-          <!-- <h2 class="dsTl">необходимость включения в производственный план</h2> 
-          <h2 class="dsTl">целого ряда внеочередных мероприятий с учётом </h2>
-          <h2 class="dsTl">комплекса кластеризации усилий. </h2> -->
         </div>
         
         <div class="order">
@@ -29,34 +26,12 @@
 </template>
 
 <script>
-import Renderer from '@/components/Scripts/Three/Renderer'
-import * as three from 'three'
 export default{
   data(){
     return{
       previewMediaVisible: false
     }
   },
-  mounted: function(){
-    const canvas = document.getElementById("canvas")
-    if(supportThreeCheck(canvas)){
-      Renderer(three, canvas);
-    }
-    else{
-      this.previewMediaVisible = false
-    }
-  }
-}
-function supportThreeCheck(canvas){
-    let gl = null;
-    try {
-        gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        console.log(gl)
-    }
-    catch(e) {
-        return false
-}
-  return gl;
 }
 </script>
 

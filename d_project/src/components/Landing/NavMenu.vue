@@ -21,13 +21,14 @@
       </div>
       <div class="rightPart">
         <div class="lkButton">
-          <button class="GlobalLogicButtonLk">Личный кабинет</button>
+          <button class="GlobalLogicButtonLk" @click="lkBtnClick()">Личный кабинет</button>
         </div>
       </div>
   </div>
 </template>
 
 <script>
+import {checkLoginAndPass} from "../Scripts/CookieRunner.js"
 export default {
     data(){
         return{
@@ -37,6 +38,11 @@ export default {
     methods:{
         navBlockButtonClick(adress){
             this.emitter.emit("NewPage", adress)
+        },
+        lkBtnClick(){
+          if(checkLoginAndPass()){
+            this.emitter.emit("StartAuth", true)
+          }
         }
     },
     create:{

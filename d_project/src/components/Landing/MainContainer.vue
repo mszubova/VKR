@@ -24,7 +24,6 @@ import PortfolioPage from './functionalComponents/PortfolioPage.vue'
 import ServicesPage from './functionalComponents/ServicesPage.vue'
 import ContactsPage from './functionalComponents/ContactsPage.vue'
 import AboutPage from './functionalComponents/AboutPage.vue'
-//import { emitter } from '@/main'
 export default {
     data(){
         return{
@@ -35,9 +34,7 @@ export default {
                 contacts: false,
                 about: false
             },
-            onDisplay: {'home': 0},
-            nextPage: {'portfolio': 1},
-            lastPage: {'home': 0},
+            onDisplay: 'home'
         }
     },
     components:{
@@ -49,24 +46,12 @@ export default {
     },
     created: function(){
         this.emitter.on("NewPage", page => {
-            this.pagesVisibility[Object.keys(this.onDisplay)] = false;
+            this.pagesVisibility[this.onDisplay] = false;
             this.pagesVisibility[page] = true;
-            this.onDisplay = updatePageStatus(page);
+            this.onDisplay = page;
         })
     }
 }
-let pages = ['home', 'portfolio', 'services', 'contacts', 'about'];
-function updatePageStatus(pageNow){
-    return{[pageNow]: pages.indexOf(pageNow)};
-}
-
-window.addEventListener('mousewheel', function(e) {
-    // spinner(document.getElementById(`${this.onDisplay}`+'Pg'), document.getElementById(`${this.nextPage}`+'Pg'))
-    // console.log(e.wheelDeltaY)
-    e.preventDefault();
-    document.getElementById(Object.keys(this.onDisplay)+'Pg').style.left += e.deltaY;
-})
-
 </script>
 
 <style>
