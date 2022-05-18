@@ -1,5 +1,5 @@
 export async function requestData(data){
-let response = await fetch("/mainController.php",{
+let response = await fetch("/mainControllerPC.php",{
     method: "POST",
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -8,8 +8,7 @@ let response = await fetch("/mainController.php",{
 }
 );
 
-if (response.ok) { // если HTTP-статус в диапазоне 200-299
-  // получаем тело ответа (см. про этот метод ниже)
+if (response.ok) {
   let json = await response.json();
   alert(json);
 } else {

@@ -56,7 +56,7 @@ html{
   left: -1vw;
   width: 100vw;
   height: 10vh;
-  background-color: black;
+  background-color: #090909;
   z-index: 1;
 }
 .navMenu{
@@ -65,7 +65,7 @@ html{
   position: fixed;
   top: 4vh;
   z-index: 2;
-  background-color: black;
+  background-color: #090909;
 }
 .mainContainer{
   position: relative;
