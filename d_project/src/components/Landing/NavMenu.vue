@@ -52,6 +52,8 @@ export default {
 </script>
 
 <style>
+.navRoot{
+}
 .rightPart{
     position: relative;
     float: right;

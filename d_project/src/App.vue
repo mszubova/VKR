@@ -4,6 +4,7 @@
       <auth-page></auth-page>
     </div>
     <div class="landing" v-if="!visibilityAuth">
+        <div class="void"></div>
       <div class="navMenu">
         <nav-menu></nav-menu>
       </div>
@@ -44,13 +45,27 @@ export default {
 </script>
 
 <style>
+
 html{
   overflow-x: hidden;
+  
+}
+.void{
+  position: fixed;
+  top: 0;
+  left: -1vw;
+  width: 100vw;
+  height: 10vh;
+  background-color: black;
+  z-index: 1;
 }
 .navMenu{
-  width: 100%;
-  position: absolute;
+  left: -1vw;
+  width: 100vw;
+  position: fixed;
   top: 4vh;
+  z-index: 2;
+  background-color: black;
 }
 .mainContainer{
   position: relative;

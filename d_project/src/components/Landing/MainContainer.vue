@@ -58,7 +58,5 @@ export default {
 .mainRoot{
     position: relative;
 }
-body{
-    overflow: hidden;
-}
+
 </style>

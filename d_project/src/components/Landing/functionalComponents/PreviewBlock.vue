@@ -1,6 +1,7 @@
 <template>
   <div class="previewRoot">
-    <div class="title">
+    <div class="onDislpay">
+      <div class="title">
       <div class="raindowTitle">
         <h2 class="rnbTl">PROGRESS center - это агенство </h2>
         <h2 class="rnbTl">комплексного маркетинга</h2>
@@ -11,7 +12,6 @@
           <h2 class="dsTl">Другими словами, помогаем хорошим проектам выглядеть</h2>
           <h2 class="dsTl"> ещё лучше.</h2> 
         </div>
-        
         <div class="order">
           <button class="makeOrderBtn">Оставить заявку</button>
         </div>
@@ -22,11 +22,19 @@
       <div class="imagePrev" v-if="!previewMediaVisible">
         <img src="https://i.scdn.co/image/ab67616d0000b273ca3ba69bdf0a3d78e03c64ec"/>
       </div>
+    </div>
+    <div class="an">
+      <reasons-page></reasons-page>
+    </div>
   </div>
 </template>
 
 <script>
+import ReasonsPageVue from './prewiewComponents/ReasonsPage.vue'
 export default{
+  components:{
+    "reasons-page":ReasonsPageVue
+  },
   data(){
     return{
       previewMediaVisible: false
@@ -36,6 +44,14 @@ export default{
 </script>
 
 <style>
+.an{
+  position: absolute;
+  left: -1vw;
+  top: 100vh;
+}
+div.onDislpay{
+  height: 100vh;
+}
 .order{
   position: relative;
   margin-top: 10%;
