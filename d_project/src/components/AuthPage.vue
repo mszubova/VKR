@@ -1,7 +1,7 @@
 <template>
   <div class="authRoot">
-      <button class="back" @click="btnBackClick()">Назад</button>
-      <div class="inputBlock">
+      <button class="back" @click="btnBackClick()" >Назад</button>
+      <div class="inputBlock" v-show="way == 'auth'">
           <div class="loginBlock">
               <input id="login" type="text"/>
           </div>
@@ -14,8 +14,10 @@
           <div class="entBtn">
               <button @click="EntireBtnClick()">Вход</button>
           </div>
-
       </div>
+        <div class="application" v-show="way == 'application'">
+            <input id="email" type="email"/>
+        </div>
   </div>
 </template>
 
@@ -23,6 +25,9 @@
 import ColorChange from "./Scripts/ColorChange"
 import { requestData } from "./Scripts/Connect"
 export default {
+    props:{
+        way: String
+    },
     data(){
         return{
             alertVisible: false,
@@ -32,13 +37,17 @@ export default {
     beforeCreate: function(){
         ColorChange({backgroundColor: "white"})
     },
+    created(){
+        
+    },
     methods:{
         btnBackClick(){
             ColorChange({backgroundColor: "#090909"})
-            this.emitter.emit("StartAuth", false)
+            this.emitter.emit("StartAuth", {visible: false, way: "back"})
         },
         EntireBtnClick(){
             try{
+                validateEmail();
                 this.alertVisible = false;
                 let lgn = document.getElementById("login").value;
                 let pswrd = document.getElementById("password").value;
@@ -47,7 +56,7 @@ export default {
                     requestData({type: "Authorization",login: lgn, password: pswrd})
                 }
                 else{
-                    this.alertText = "Введите пароль правильно"
+                    this.alertText = "Введите данные правильно"
                     this.alertVisible = true;
                 }
             }
@@ -57,6 +66,15 @@ export default {
             }
         }
     }
+}
+
+function validateEmail(){
+    var email = document.getElementById("email").value;
+    var pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(email.match(pattern)){
+        console.log("aaaaa")
+    }else{console.log("vbb")}
 }
 </script>
 

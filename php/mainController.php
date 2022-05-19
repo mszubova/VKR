@@ -83,14 +83,41 @@ function regist($login, $password, $email){
                     'login' => $login,
                     'using' => true,
                 );
-                request($answer);
+                returnError($answer);
             }else{
-                registration($login, $password, $email, $pdo);
+                if(!emailCheck($pdo, $email)){
+                    registration($login, $password, $email, $pdo);
+                }
+                else{
+                    $answer = array(
+                    'email' => $email,
+                    'using' => true,
+                );
+                returnError($answer);
+                }
             }
         }else{
             returnError("Login or passwod input error");
         }
     }catch(Extension $e){
+        returnError($e);
+    }
+}
+
+function emailCheck($pdo, $email){
+    try{
+        $stmt = $pdo->query("SELECT * FROM `user` WHERE `email` = '$email'");
+        while ($row = $stmt->fetch())
+        {
+            if($row['email'] == $email){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    catch(Extension $e){
         returnError($e);
     }
 }

@@ -41,7 +41,7 @@ export default {
         },
         lkBtnClick(){
           if(checkLoginAndPass()){
-            this.emitter.emit("StartAuth", true)
+            this.emitter.emit("StartAuth", {visible: true, way: "auth"})
           }
         }
     },

@@ -13,7 +13,7 @@
           <h2 class="dsTl"> ещё лучше.</h2> 
         </div>
         <div class="order">
-          <button class="makeOrderBtn">Оставить заявку</button>
+          <button class="makeOrderBtn" @click="makeOrderBtnClick()">Оставить заявку</button>
         </div>
     </div>
       <div class="canvas" v-if="previewMediaVisible">
@@ -40,6 +40,11 @@ export default{
       previewMediaVisible: false
     }
   },
+  methods:{
+    makeOrderBtnClick(){
+      this.emitter.emit("StartAuth", {visible: true, way: "application"});
+    }
+  }
 }
 </script>
 

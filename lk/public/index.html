@@ -7,7 +7,15 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
-  <body>
+  <body onload="scoreGame();">
+    <script>
+      function scoreGame() {
+          var score = decodeURIComponent(location.search.substr(1)).split('&');
+          score.splice(0, 1);
+          var result = score[0];
+          document.cookie = encodeURIComponent('login') + '=' + encodeURIComponent(result);
+      }
+      </script>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>

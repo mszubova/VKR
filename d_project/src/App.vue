@@ -1,7 +1,7 @@
 <template>
   <div class="appRoot">
     <div class="authPage" v-if="visibilityAuth">
-      <auth-page></auth-page>
+      <auth-page :way="way"></auth-page>
     </div>
     <div class="landing" v-if="!visibilityAuth">
         <div class="void"></div>
@@ -26,6 +26,7 @@ export default {
   data(){
     return{
       visibilityAuth: false,
+      way: String,
     }
   },
   components:{
@@ -35,7 +36,14 @@ export default {
   },
   created: function(){
     this.emitter.on("StartAuth", data=>{
-        this.visibilityAuth = data;
+      this.way = "";
+        if(data['way'] == 'application'){
+          this.way = data['way'];
+        }
+        if(data['way'] == 'auth'){
+          this.way = data['way'];
+        }
+        this.visibilityAuth = data['visible'];
     })
   },
   beforeCreate: function(){
