@@ -7,9 +7,9 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
-  <body onload="scoreGame();">
+  <body onload="score();">
     <script>
-      function scoreGame() {
+      function score() {
           var score = decodeURIComponent(location.search.substr(1)).split('&');
           score.splice(0, 1);
           var result = score[0];

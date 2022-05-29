@@ -1,6 +1,6 @@
 import errorController from './errorController.js'
 export async function requestData(data){
-  console.log(data)
+console.log(data);
 let response = await fetch("/mainControllerPC.php",{
     method: "POST",
     headers: {

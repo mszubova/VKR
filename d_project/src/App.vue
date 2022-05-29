@@ -65,7 +65,7 @@ html{
   width: 100vw;
   height: 10vh;
   background-color: #090909;
-  z-index: 1;
+  z-index: 2;
 }
 .navMenu{
   left: -1vw;

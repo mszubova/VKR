@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import readCoolie from './Script/readCoolie'
+import readCoolie from '@/components/Script/readCookies.js'
 export default {
   data(){
     return{
@@ -16,13 +16,13 @@ export default {
   },
   mounted: function(){
     try{
-      this.name = readCoolie('login');
-      if(this.name == undefined){
+      setTimeout(() => {
         this.name = readCoolie('login');
-      }
+      }, 1000);
     }
     catch(e){
       alert(e);
+      console.log(e)
     }
   }
 }

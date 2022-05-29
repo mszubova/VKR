@@ -16,11 +16,8 @@
           <button class="makeOrderBtn" @click="makeOrderBtnClick()">Оставить заявку</button>
         </div>
     </div>
-      <div class="canvas" v-if="previewMediaVisible">
-          <canvas id="canvas"></canvas>
-      </div>
       <div class="imagePrev" v-if="!previewMediaVisible">
-        <img src="https://i.scdn.co/image/ab67616d0000b273ca3ba69bdf0a3d78e03c64ec"/>
+        <img src="@/assets/previewImg.png"/>
       </div>
     </div>
     <div class="an">
@@ -66,6 +63,7 @@ div.onDislpay{
   float: left;
   left: 10vw;
   top: 15vh;
+  z-index: 1;
 }
 .rnbTl{
   margin-bottom: -15px;
@@ -110,10 +108,11 @@ canvas{
   height: 100%;
 }
 .imagePrev{
-  position: relative;
+  position: fixed;
+  z-index: -2;
   float: right;
   right: 5vw;
-  top: 5vh;
+  top: 20vh;
 }
 .makeOrderBtn{
     text-align: center;
@@ -124,14 +123,18 @@ canvas{
   cursor: pointer;
 }
 .makeOrderBtn, .makeOrderBtn::after {
-    width: 300px;
-    height: 50px;
-    font-size: 24px;
-    font-family: 'Nunito', sans-serif;
+    width: 14vw;
+    height: 3vw;
+    min-width: 150pt;
+    min-height: 45pt;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 27px;
     background: linear-gradient(45deg, transparent 5%, #00E6F6 5%);
     border: 0;
     color: #000;
-    letter-spacing: 3px;
     box-shadow: 6px 0px 0px  #A953D1;
     outline: transparent;
     position: relative;

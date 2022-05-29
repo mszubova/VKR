@@ -8,7 +8,7 @@ try{
 }
 
 try{
-    $pdo;
+    global $pdo;
     switch($data["type"]){
         case "Authorization":
             $DBresult = auth($data["login"], $data["password"]);
@@ -16,6 +16,11 @@ try{
             break;
         case "Registration":
             regist($data["login"], $data["password"], $data["email"]);
+            break;
+        case "personData":
+            include "personSrc/personData.php";
+            setData($data['login']);
+            request($personData);
             break;
         default:
             returnError("Unknown type");

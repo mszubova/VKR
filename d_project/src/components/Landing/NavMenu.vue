@@ -57,7 +57,7 @@ export default {
 .rightPart{
     position: relative;
     float: right;
-    right: 6vw
+    right: 9vw
 }
 .navTitles{
     font-size: 24px;
@@ -77,7 +77,7 @@ export default {
 }
 .LogoContainer{
     position: absolute;
-    left: 10vw;
+    left: 11.5vw;
     top: 20%;
 }
 .NavLogo:hover{
@@ -100,14 +100,18 @@ export default {
   cursor: pointer;
 }
 .GlobalLogicButtonLk, .GlobalLogicButtonLk::after {
-    width: 300px;
-    height: 50px;
-    font-size: 24px;
-    font-family: 'Nunito', sans-serif;
+    width: 14vw;
+    height:5.5vh;
+    min-width: 150pt;
+    min-height: 45pt;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 27px;
     background: linear-gradient(45deg, transparent 5%, #A953D1 5%);
     border: 0;
     color: #fff;
-    letter-spacing: 3px;
     box-shadow: 6px 0px 0px #00E6F6;
     outline: transparent;
     position: relative;
