@@ -1,7 +1,8 @@
 <template>
   <div class="authRoot">
-      <div class="goback">
-          
+      <div class="goback"  @click="btnBackClick">
+          <img class="backImg" src="@/assets/back.png"/>
+          <a class="backText">Вернуться на основную страницу</a>
       </div>
       <div class="authCont">
           <div class="raindowPart">
@@ -13,7 +14,7 @@
                     <div class="h2cont">
                         <h2 class="subTitle">Для продолжения работы с нами, пожалуйста, войдите в свою учетную запись.</h2>
                     <div class="entireBtn">
-                        <button class="entireBtn">Войти</button>
+                        <button @click="authBtnClick()" class="entireBtn">Войти</button>
                     </div>
                     </div>
                 </div>
@@ -22,19 +23,23 @@
               <div class="contInput">
                 <h1 class="authBlockTitle">Регистрация</h1>
                 <div class="inputBlock">
-                    <div class="registBlock" v-if="way == 'regist'"></div>
-                    <div class="authBlo" v-if="way == 'auth'">
+                    <div class="authBlo" >
+                    <div class="auth" v-if="way == 'regist'">
                         <div class="fm">
-                            <input class="fm" type="text" placeholder="Фамилия" />
+                            <input id="fmInp" class="fmInp" type="text" placeholder="Фамилия" />
                         </div>
                         <div class="nm">
-                            <input class="nm" type="text" placeholder="Имя" />
+                            <input id="nmInp" class="nmInp" type="text" placeholder="Имя" />
                         </div>
+                        <div class="ot">
+                            <input id="otInp" class="otInp" type="text" placeholder="Отчетство" />
+                        </div>
+                    </div>
                         <div class="em">
-                            <input class="em" type="text" placeholder="Эл. почта" />
+                            <input id="emInp" class="emInp" type="text" placeholder="Эл. почта" />
                         </div>
                         <div class="ps">
-                            <input class="ps" type="password" placeholder="Пароль" />
+                            <input id="psInp" class="psInp" type="password" placeholder="Пароль" />
                         </div>
                     </div>
                 </div>
@@ -77,6 +82,9 @@ export default {
         // }
     },
     methods:{
+        authBtnClick(){
+            this.emitter.emit("startAuth", {visible: true, way: "auth"})
+        },
         btnBackClick(){
             ColorChange({backgroundColor: "#090909"})
             this.emitter.emit("StartAuth", {visible: false, way: "back"})
@@ -84,25 +92,28 @@ export default {
         EntireBtnClick(){
             try{
                 this.alertVisible = false;
-                let fm = document.getElementsByClassName("fm").value;
-                let nm = document.getElementsByClassName("nm").value;
-                let em = document.getElementsByClassName("em").value;
-                let ps = document.getElementsByClassName("ps").value;
-                if(fm.length != 0 && nm.length != 0 && em.length != 0 && ps.length != 0){
-                    document.getElementById("password").value = "";
+                let fm = document.getElementById("fmInp").value;
+                let nm = document.getElementById("nmInp").value;
+                let ot = document.getElementById("otInp").value;
+                let em = document.getElementById("emInp").value;
+                let ps = document.getElementById("psInp").value;
+                if(fm != '' && nm != '' && em != '' && ps != ''){
                     requestData({"type": "Registration", 
                     "email": em, 
                     "password": ps, 
                     "registType": "customer", 
                     "PersonalData":{
                         "SurName": fm,
-                        "name": nm
+                        "name": nm,
+                        "middleName": ot
                     }
                     })
                 }
                 else{
                     this.alertVisible = true;
                 }
+                    //document.getElementById("password").value = "";
+                    
             }
             catch(e){
                 this.alertVisible = true;
@@ -142,6 +153,10 @@ div.fm{
     width: 100%;
     margin-top: 3%;
 }
+div.ot{
+    width: 100%;
+    margin-top: 3%;
+}
 div.nm{
     width: 100%;
     margin-top: 3%;
@@ -154,25 +169,31 @@ div.em{
     width: 100%;
     margin-top: 3%;
 }
-input.nm{
+input.nmInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
-input.ps{
+input.psInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
-input.em{
+input.emInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
-input.fm{
+input.fmInp{
+    background: #F2F2F2;
+    border-style: none;
+    width: 40%;
+    height: 4vh;
+}
+input.otInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;

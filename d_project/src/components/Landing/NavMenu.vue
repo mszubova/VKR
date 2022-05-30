@@ -41,7 +41,7 @@ export default {
         },
         lkBtnClick(){
           if(checkLoginAndPass()){
-            this.emitter.emit("StartAuth", {visible: true, way: "auth"})
+            this.emitter.emit("StartAuth", {visible: true, way: "regist"})
           }
         }
     },
@@ -52,8 +52,6 @@ export default {
 </script>
 
 <style>
-.navRoot{
-}
 .rightPart{
     position: relative;
     float: right;

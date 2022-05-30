@@ -37,10 +37,10 @@ export default {
   created: function(){
     this.emitter.on("StartAuth", data=>{
       this.way = "";
-        if(data['way'] == 'application'){
+        if(data['way'] == 'regist'){
           this.way = data['way'];
         }
-        if(data['way'] == 'auth'){
+        else if(data['way'] == 'auth'){
           this.way = data['way'];
         }
         this.visibilityAuth = data['visible'];

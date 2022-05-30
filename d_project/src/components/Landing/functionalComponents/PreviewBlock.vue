@@ -39,7 +39,7 @@ export default{
   },
   methods:{
     makeOrderBtnClick(){
-      this.emitter.emit("StartAuth", {visible: true, way: "application"});
+      this.emitter.emit("StartAuth", {visible: true, way: "auth"});
     }
   }
 }
