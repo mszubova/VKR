@@ -35,12 +35,9 @@ export default {
   },
   mounted: function(){
     try{
-      document.cookie = encodeURIComponent('name') + '=' + encodeURIComponent('yo');
-      document.cookie = encodeURIComponent('role') + '=' + encodeURIComponent('biab');
-      document.cookie = encodeURIComponent('email') + '=' + encodeURIComponent('dsdsd');
       let data = {'name': readCookies('name'),
         'role':readCookies('role'),
-        'email':readCookies('role')};
+        'email':readCookies('email')};
       console.log(data)
       this.name = data['name'];
 

@@ -19,9 +19,9 @@ export default {
 <style>
 a.role{
     position: relative;
-    float: left;
-    top: 40%;
-    left: 30%;
+    float: right;
+    top: 20pt;
+    right: 40%;
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 500;
@@ -29,20 +29,27 @@ a.role{
     border: 1px solid #A953D1;
     border-radius: 50px;
     height: 20pt;
-    width: 135pt;
+    width: 110pt;
     vertical-align:middle;
     text-align: center;
     padding-top:5pt;
 }
 a.name{
     position: relative;
-    top: 40%;
+    top: 20pt;
     float: right;
     right: 20%;
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 500;
     color: white;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    height: 20pt;
+    width: 0pt;
+    vertical-align:middle;
+    text-align: center;
+    padding-top:5pt;
 }
 div.rightPart{
     position: inherit;
