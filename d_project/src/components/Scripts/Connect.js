@@ -22,16 +22,16 @@ if (response.ok) {
 function requestView(data){
   switch (data['authorization']){
     case 'true':
-      redirect(data['login']);
+      redirect(data);
       break;
     case 'false':
-      errorController("Не удалось авторизоваться. Ты лох");
+      errorController("Не удалось авторизоваться.");
       break;
     case true:
-      redirect(data['login']);
+      redirect(data);
       break;
     case false:
-      errorController("Не удалось авторизоваться. Ты лох");
+      errorController("Не удалось авторизоваться.");
       break;
     default:
       errorController("Неизвестный ответ сервера")
@@ -41,7 +41,10 @@ function requestView(data){
 
 async function redirect(data){
   try{
-    window.location.href = '/person.html?&'+data
+    document.cookie = encodeURIComponent('name') + '=' + encodeURIComponent(data['name']);
+    document.cookie = encodeURIComponent('role') + '=' + encodeURIComponent(data['role']);
+    document.cookie = encodeURIComponent('email') + '=' + encodeURIComponent(data['email']);
+    window.location.href = '/person.html?&'+data['name']
   }
   catch(e){
     console.log(e);

@@ -1,6 +1,6 @@
 <template>
   <div class="authRoot">
-      <div class="goback"  @click="btnBackClick">
+      <div class="goback"  @click="btnBackClick()">
           <img class="backImg" src="@/assets/back.png"/>
           <a class="backText">Вернуться на основную страницу</a>
       </div>
@@ -69,21 +69,10 @@ export default {
         ColorChange({backgroundColor: "white"})
     },
     created(){
-        // try{
-        //     if(this.way== 'auth'){
-        //         this.title = "Вход в систему"
-        //     }
-        //     else if(this.way == 'application'){
-        //         this.title = "Заполните заявку"
-        //     }
-        // }
-        // catch(e){
-        //     errorController(e);
-        // }
     },
     methods:{
         authBtnClick(){
-            this.emitter.emit("startAuth", {visible: true, way: "auth"})
+            this.emitter.emit("StartAuth", {visible: true, way: "auth"})
         },
         btnBackClick(){
             ColorChange({backgroundColor: "#090909"})
@@ -92,28 +81,40 @@ export default {
         EntireBtnClick(){
             try{
                 this.alertVisible = false;
-                let fm = document.getElementById("fmInp").value;
-                let nm = document.getElementById("nmInp").value;
-                let ot = document.getElementById("otInp").value;
-                let em = document.getElementById("emInp").value;
-                let ps = document.getElementById("psInp").value;
-                if(fm != '' && nm != '' && em != '' && ps != ''){
-                    requestData({"type": "Registration", 
-                    "email": em, 
-                    "password": ps, 
-                    "registType": "customer", 
-                    "PersonalData":{
-                        "SurName": fm,
-                        "name": nm,
-                        "middleName": ot
+                let em, ps
+                if(this.way == 'auth'){
+                    em = document.getElementById("emInp").value;
+                    ps = document.getElementById("psInp").value;
+                    if(em != '' && ps != ''){
+                    requestData({
+                        "type": "Authorization",
+                        "email": em, 
+                        "password": ps
+                    })}
+                    else{
+                        this.alertVisible = true;
                     }
-                    })
-                }
-                else{
-                    this.alertVisible = true;
-                }
-                    //document.getElementById("password").value = "";
-                    
+                }else{
+                    this.alertVisible = false;
+                    let fm = document.getElementById("fmInp").value;
+                    let nm = document.getElementById("nmInp").value;
+                    let ot = document.getElementById("otInp").value;
+                    if(fm != '' && nm != '' && em != '' && ps != ''){
+                        requestData({"type": "Registration", 
+                        "email": em, 
+                        "password": ps, 
+                        "registType": "customer", 
+                        "PersonalData":{
+                            "SurName": fm,
+                            "name": nm,
+                            "middleName": ot
+                        }
+                        })
+                    }
+                    else{
+                        this.alertVisible = true;
+                    }
+                }   
             }
             catch(e){
                 this.alertVisible = true;
@@ -125,6 +126,19 @@ export default {
 </script>
 
 <style>
+div.goback:hover{
+    cursor: pointer;
+}
+a.backText{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    color: #AEAEAE;
+}
+img.backImg{
+    width: 20pt;
+    height: auto;
+}
 p.alertText{
     position: static;
     text-align: center;
