@@ -9,19 +9,33 @@
                 <div class="logoCont">
                     <img src="@/assets/logo.png"/>
                 </div>
-                <div class="entieTitle">
+                <div class="entieTitle" v-if="way == 'auth'">
+                    <h1 class="avt">Регистрация</h1>
+                    <div class="h2cont">
+                        <h2 class="subTitle">Для продолжения работы с нами, вы должны быть зарегестрированы в системе.</h2>
+                    <div class="entireBtn">
+                        <button @click="authBtnClick('regist')" class="entireBtn">Зарегестрироваться</button>
+                    </div>
+                    </div>
+                </div>
+                <div class="entieTitle" v-if="way == 'regist'">
                     <h1 class="avt">Авторизация</h1>
                     <div class="h2cont">
                         <h2 class="subTitle">Для продолжения работы с нами, пожалуйста, войдите в свою учетную запись.</h2>
                     <div class="entireBtn">
-                        <button @click="authBtnClick()" class="entireBtn">Войти</button>
+                        <button @click="authBtnClick('auth')" class="entireBtn">Войти</button>
                     </div>
                     </div>
                 </div>
           </div>
           <div class="dataInPart">
               <div class="contInput">
-                <h1 class="authBlockTitle">Регистрация</h1>
+                  <div class="ttitle" v-if="way == 'auth'">
+                    <h1 class="authBlockTitle">Авторизация</h1>
+                  </div>
+                  <div class="ttitle" v-if="way == 'regist'">
+                      <h1 class="authBlockTitle">Регистрация</h1>
+                  </div>
                 <div class="inputBlock">
                     <div class="authBlo" >
                     <div class="auth" v-if="way == 'regist'">
@@ -71,8 +85,8 @@ export default {
     created(){
     },
     methods:{
-        authBtnClick(){
-            this.emitter.emit("StartAuth", {visible: true, way: "auth"})
+        authBtnClick(way){
+            this.emitter.emit("StartAuth", {visible: true, way: way})
         },
         btnBackClick(){
             ColorChange({backgroundColor: "#090909"})
@@ -289,7 +303,7 @@ button.entireBtn{
     border: 2px solid #FFFFFF;
     border-radius: 33px;
     color: #fff;
-    width: 135pt;
+    width: 250pt;
     height: 40pt;
     font-family: 'Nunito';
     font-style: normal;

@@ -38,7 +38,7 @@ a.name{
     position: relative;
     top: 20pt;
     float: right;
-    right: 20%;
+    right: 33%;
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 500;
@@ -54,6 +54,7 @@ a.name{
 div.rightPart{
     position: inherit;
     float: right;
+    right: 0;
     width: 30%;
     height: 9vh;
 }

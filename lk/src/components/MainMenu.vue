@@ -10,6 +10,10 @@
           <div v-if="selectHistory"  class="selectBlock">
           </div>
           <a class="menuPoint" @click="selected(1)">ИСТОРИЯ ЗАКАЗОВ</a>
+          <div class="historyParam" v-show="historyParamVisible">
+            <a class="subdPoint" @click="selected(1, 0)">ОТКЛОНЕННЫЕ ЗАЯВКИ</a>
+            <a class="subPoint" @click="selected(1, 1)">ВСЕ ЗАЯВКИ</a>
+          </div>
         </div>
         <div class="point">
           <div v-if="selectEmployee"  class="selectBlock">
@@ -33,34 +37,44 @@ export default {
       selectPanel: true,
       selectHistory: false,
       selectEmployee: false,
-      selectSettings: false
+      selectSettings: false,
+      historyParamVisible: false
     }
   },
   mounted: function(){
-    
+        this.selected(0)
+
   },
   methods:{
-    selected(num){
+    selected(num, subPoint){
+      this.historyParamVisible = false
       switch (num){
         case 0:
           this.hideElem();
           this.selectPanel = true;
-          this.emitter.emit("workAreaContain", num)
+          this.emitter.emit("updateControlComponent", [num])
           break;
         case 1:
           this.hideElem();
-          this.selectHistory = true;
-          this.emitter.emit("workAreaContain", num)
+          this.historyParamVisible = true
+          if(subPoint == 0){
+            this.selectHistory = true;
+            this.emitter.emit("updateControlComponent", [num, 'rejected'])
+          }
+          if(subPoint == 1){
+            this.selectHistory = true;
+            this.emitter.emit("updateControlComponent", [num, 'all'])
+          }
           break;
         case 2:
           this.hideElem();
           this.selectEmployee = true;
-          this.emitter.emit("workAreaContain", num)
+          this.emitter.emit("updateControlComponent", num)
           break;
         case 3:
           this.hideElem()
           this.selectSettings = true;
-          this.emitter.emit("workAreaContain", num)
+          this.emitter.emit("updateControlComponent", num)
           break;
       }
     },
@@ -70,12 +84,16 @@ export default {
       this.selectEmployee = false;
       this.selectSettings = false;
     }
+  },
+  created(){
   }
 }
 </script>
 
 <style>
 div.point{
+  position: relative;
+  height: 100%;
   display: table;
 }
 div.selectBlock{
@@ -85,8 +103,15 @@ div.selectBlock{
   height: 100%;
   width: 0.2vw;
 }
+div.historyParam{
+  position: relative;
+}
+a.subPoint{
+  position: relative;
+  top: 10%;
+}
 a.menuPoint{
-  position: static;
+  position: relative;
   display: table-cell;
   top: 2vh;
   font-family: 'Ubuntu';
