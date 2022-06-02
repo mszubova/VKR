@@ -1,30 +1,22 @@
 <template>
   <div class="menuroot">
       <div class="menuPoint">
-        <div class="point">
-          <div v-if="selectPanel" class="selectBlock">
-          </div>
+        <li class="point">
           <a class="menuPoint" @click="selected(0)" >ПАНЕЛЬ УПРАВЛЕНИЯ</a>
-        </div>
-        <div class="point">
-          <div v-if="selectHistory"  class="selectBlock">
-          </div>
+        </li>
+        <li class="point">
           <a class="menuPoint" @click="selected(1)">ИСТОРИЯ ЗАКАЗОВ</a>
-          <div class="historyParam" v-show="historyParamVisible">
-            <a class="subdPoint" @click="selected(1, 0)">ОТКЛОНЕННЫЕ ЗАЯВКИ</a>
-            <a class="subPoint" @click="selected(1, 1)">ВСЕ ЗАЯВКИ</a>
-          </div>
-        </div>
-        <div class="point">
-          <div v-if="selectEmployee"  class="selectBlock">
-          </div>
+          <ul class="historyParam" v-show="historyParamVisible">
+            <li class="subPoint" @click="selected(1, 0)">ОТКЛОНЕННЫЕ ЗАЯВКИ</li>
+            <li class="subPoint" @click="selected(1, 1)">ВСЕ ЗАЯВКИ</li>
+          </ul>
+        </li>
+        <li class="point">
           <a class="menuPoint" @click="selected(2)">СОТРУДНИКИ</a>
-        </div>
-        <div class="point">
-          <div v-if="selectSettings" class="selectBlock">
-          </div>
+        </li>
+        <li class="point">
           <a class="menuPoint"  @click="selected(3)" >НАСТРОЙКИ</a>
-        </div>
+        </li>
       </div>
   </div>
 </template>
@@ -56,7 +48,7 @@ export default {
           break;
         case 1:
           this.hideElem();
-          this.historyParamVisible = true
+          this.historyParamVisible = !this.historyParamVisible
           if(subPoint == 0){
             this.selectHistory = true;
             this.emitter.emit("updateControlComponent", [num, 'rejected'])
@@ -92,27 +84,25 @@ export default {
 
 <style>
 div.point{
-  position: relative;
-  height: 100%;
-  display: table;
 }
-div.selectBlock{
-  display: table-cell;
-  background: #BE9EC9;
-  left: 0%;
-  height: 100%;
-  width: 0.2vw;
-}
-div.historyParam{
+.historyParam{
   position: relative;
 }
-a.subPoint{
+li.subPoint{
   position: relative;
-  top: 10%;
+  top: 2vh;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14pt;
+  color: #FFFFFF;
+  text-align: center;
+  list-style-type: none; 
+  text-align: left;
+  margin-bottom: 2em;
 }
-a.menuPoint{
+.menuPoint{
   position: relative;
-  display: table-cell;
   top: 2vh;
   font-family: 'Ubuntu';
   font-style: normal;
@@ -121,17 +111,17 @@ a.menuPoint{
   color: #FFFFFF;
   text-align: center;
   left: 0vw;
-  padding-left: 40pt;
+  padding-left: 10pt;
 }
-a.menuPoint:hover{
+.menuPoint:hover{
   cursor: pointer;
 }
-div.point{
-  width: 100%;
-  height: 45pt;
+li{
+  list-style-type: none; 
+  text-align: left;
+  margin-bottom: 2em;
 }
 div.menuPoint{
-  position: relative;
   top: 12vh;
 }
 </style>
