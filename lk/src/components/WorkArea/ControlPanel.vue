@@ -1,7 +1,7 @@
 <template>
   <div class="contPanelRoot">
     <div class="innerCont">
-      <h1 class="title">Панель управления</h1>
+      <h1 class="title">{{title}}</h1>
       <div class="orders" v-for="n in orders" :key="n">
         <div class="ord" >
           <div class="left">
@@ -37,7 +37,8 @@ import { requestData } from '../Script/request';
 import readCookies from '../Script/readCookies';
 export default {
   props:{
-    componentData: Array
+    componentData: Array,
+    title: String
   },
   data(){
     return{

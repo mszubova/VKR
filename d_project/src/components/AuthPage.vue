@@ -43,22 +43,26 @@
                             <input id="fmInp" class="fmInp" type="text" placeholder="Фамилия" />
                         </div>
                         <div class="nm">
-                            <input id="nmInp" class="nmInp" type="text" placeholder="Имя" />
+                            <input id="nmInp" class="fmInp" type="text" placeholder="Имя" />
                         </div>
                         <div class="ot">
-                            <input id="otInp" class="otInp" type="text" placeholder="Отчетство" />
+                            <input id="otInp" class="fmInp" type="text" placeholder="Отчетство" />
+                        </div>
+                        <div class="ps">
+                            <input id="phNum" class="fmInp" type="text" placeholder="Номер телефона" />
                         </div>
                     </div>
                         <div class="em">
-                            <input id="emInp" class="emInp" type="text" placeholder="Эл. почта" />
+                            <input id="emInp" class="fmInp" type="text" placeholder="Эл. почта" />
                         </div>
                         <div class="ps">
-                            <input id="psInp" class="psInp" type="password" placeholder="Пароль" />
+                            <input id="psInp" class="fmInp" type="password" placeholder="Пароль" />
                         </div>
+                        
                     </div>
                 </div>
                 <p class="alertText" v-if="alertVisible">Введите все данные</p>
-                <button class="registBtn" @click="EntireBtnClick()">Зарегистрироваться</button>
+                <button class="registBtn" @click="EntireBtnClick()">{{BtnTitle}}</button>
             </div>
           </div>
       </div>
@@ -76,13 +80,29 @@ export default {
     data(){
         return{
             alertVisible: false,
-            title: ''
+            title: '',
+            BtnTitle: ''
         }
     },
     beforeCreate: function(){
         ColorChange({backgroundColor: "white"})
     },
     created(){
+        if(this.way == 'auth'){
+            this.BtnTitle = 'Войти'
+        }else{
+            this.BtnTitle = "Регистрация"
+        }
+        this.emitter.on("EmailIsUsing", data=>{
+            alert("Пользователь с почтой ", data, " уже существует")
+        })
+    },
+    updated(){
+        if(this.way == 'auth'){
+            this.BtnTitle = 'Войти'
+        }else{
+            this.BtnTitle = "Регистрация"
+        }
     },
     methods:{
         authBtnClick(way){
@@ -110,18 +130,22 @@ export default {
                     }
                 }else{
                     this.alertVisible = false;
+                    em = document.getElementById("emInp").value;
+                    ps = document.getElementById("psInp").value;
                     let fm = document.getElementById("fmInp").value;
                     let nm = document.getElementById("nmInp").value;
                     let ot = document.getElementById("otInp").value;
+                    let pn = document.getElementById("phNum").value;
                     if(fm != '' && nm != '' && em != '' && ps != ''){
                         requestData({"type": "Registration", 
                         "email": em, 
                         "password": ps, 
                         "registType": "customer", 
                         "PersonalData":{
-                            "SurName": fm,
+                            "surName": fm,
                             "name": nm,
-                            "middleName": ot
+                            "middleName": ot,
+                            "phoneNum": pn
                         }
                         })
                     }
@@ -158,8 +182,8 @@ p.alertText{
     text-align: center;
 }
 .registBtn{
-    position: static;
-    top: 50%;
+    position: relative;
+    top: 5%;
     background: #53B3D1;
     border-radius: 30.5665px;
     border-style: none;

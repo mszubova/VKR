@@ -1,7 +1,8 @@
 import errorController from './errorController.js'
+import { emitter } from '@/main.js';
 export async function requestData(data){
 console.log(data);
-let response = await fetch("/mainController.php",{
+let response = await fetch("http://geetech.store/mainController.php",{
     method: "POST",
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -21,21 +22,18 @@ if (response.ok) {
 
 function requestView(data){
   switch (data['authorization']){
-    case 'true':
-      redirect(data);
-      break;
-    case 'false':
-      errorController("Не удалось авторизоваться.");
-      break;
     case true:
       redirect(data);
       break;
     case false:
       errorController("Не удалось авторизоваться.");
       break;
-    default:
-      errorController("Неизвестный ответ сервера")
-      break;
+  }
+  if(data['registration']==true){
+    redirect(data);
+  }
+  else if(data['using']==true){
+    emitter.emit("EmailIsUsing", data['email'])
   }
 }
 

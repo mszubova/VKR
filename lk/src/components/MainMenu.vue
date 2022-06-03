@@ -45,10 +45,12 @@ export default {
           this.hideElem();
           this.selectPanel = true;
           this.emitter.emit("updateControlComponent", [num])
+          this.emitter.emit("Title", 'Панель управления')
           break;
         case 1:
           this.hideElem();
           this.historyParamVisible = !this.historyParamVisible
+          this.emitter.emit("Title", 'История заказов')
           if(subPoint == 0){
             this.selectHistory = true;
             this.emitter.emit("updateControlComponent", [num, 'rejected'])
@@ -60,11 +62,13 @@ export default {
           break;
         case 2:
           this.hideElem();
+          this.emitter.emit("Title", 'Сотрудники')
           this.selectEmployee = true;
           this.emitter.emit("updateControlComponent", num)
           break;
         case 3:
           this.hideElem()
+          this.emitter.emit("Title", 'Настройки')
           this.selectSettings = true;
           this.emitter.emit("updateControlComponent", num)
           break;
