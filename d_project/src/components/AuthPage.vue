@@ -1,15 +1,15 @@
-<template>
+<template> <!-- контейнер разметки страницы авторизации -->
   <div class="authRoot">
-      <div class="goback"  @click="btnBackClick()">
+      <div class="goback"  @click="btnBackClick()"> <!-- кнопка возврата на основной сайт -->
           <img class="backImg" src="@/assets/back.png"/>
           <a class="backText">Вернуться на основную страницу</a>
       </div>
-      <div class="authCont">
+      <div class="authCont"> <!-- контейнер с формой выбора типа авторизации -->
           <div class="raindowPart">
                 <div class="logoCont">
-                    <img src="@/assets/logo.png"/>
+                    <img src="@/assets/logo.png"/> <!-- логотип -->
                 </div>
-                <div class="entieTitle" v-if="way == 'auth'">
+                <div class="entieTitle" v-if="way == 'auth'"> <!-- отобрается при выборе авторизации -->
                     <h1 class="avt">Регистрация</h1>
                     <div class="h2cont">
                         <h2 class="subTitle">Для продолжения работы с нами, вы должны быть зарегестрированы в системе.</h2>
@@ -18,7 +18,7 @@
                     </div>
                     </div>
                 </div>
-                <div class="entieTitle" v-if="way == 'regist'">
+                <div class="entieTitle" v-if="way == 'regist'"> <!-- отображается при выборе регистрации -->
                     <h1 class="avt">Авторизация</h1>
                     <div class="h2cont">
                         <h2 class="subTitle">Для продолжения работы с нами, пожалуйста, войдите в свою учетную запись.</h2>
@@ -30,7 +30,7 @@
           </div>
           <div class="dataInPart">
               <div class="contInput">
-                  <div class="ttitle" v-if="way == 'auth'">
+                  <div class="ttitle" v-if="way == 'auth'"> <!-- смена заголовка в зависимости от выбора пути -->
                     <h1 class="authBlockTitle">Авторизация</h1>
                   </div>
                   <div class="ttitle" v-if="way == 'regist'">
@@ -38,7 +38,7 @@
                   </div>
                 <div class="inputBlock">
                     <div class="authBlo" >
-                    <div class="auth" v-if="way == 'regist'">
+                    <div class="auth" v-if="way == 'regist'"> <!-- поля ввода для регистрации -->
                         <div class="fm">
                             <input id="fmInp" class="fmInp" type="text" placeholder="Фамилия" />
                         </div>
@@ -52,17 +52,16 @@
                             <input id="phNum" class="fmInp" type="text" placeholder="Номер телефона" />
                         </div>
                     </div>
-                        <div class="em">
+                        <div class="em"> <!-- поля ввода для регистрации и авторизации -->
                             <input id="emInp" class="fmInp" type="text" placeholder="Эл. почта" />
                         </div>
                         <div class="ps">
                             <input id="psInp" class="fmInp" type="password" placeholder="Пароль" />
                         </div>
-                        
                     </div>
                 </div>
-                <p class="alertText" v-if="alertVisible">Введите все данные</p>
-                <button class="registBtn" @click="EntireBtnClick()">{{BtnTitle}}</button>
+                <p class="alertText" v-if="alertVisible">Введите все данные</p> <!-- предупреждение при некорректном вводе -->
+                <button class="registBtn" @click="EntireBtnClick()">{{BtnTitle}}</button> <!-- вызов метода для отправки запроса -->
             </div>
           </div>
       </div>
@@ -70,54 +69,53 @@
 </template>
 
 <script>
-import ColorChange from "./Scripts/ColorChange"
-import { requestData } from "./Scripts/Connect"
-//import errorController from "./Scripts/errorController"
+import ColorChange from "./Scripts/ColorChange" //метод изменения цвета фона body
+import { requestData } from "./Scripts/Connect" //метод отправки и обработки запросов
 export default {
     props:{
-        way: String
+        way: String //принимаемый родительским копонентом параметр
     },
     data(){
         return{
-            alertVisible: false,
-            title: '',
-            BtnTitle: ''
+            alertVisible: false, //параметр видимости предупреждния
+            title: '', //заголовок окна
+            BtnTitle: '' //заголовок кнопки авторизации
         }
     },
     beforeCreate: function(){
-        ColorChange({backgroundColor: "white"})
+        ColorChange({backgroundColor: "white"}) //изменение цвета элемента body перед созданием окна 
     },
     created(){
-        if(this.way == 'auth'){
+        if(this.way == 'auth'){ //измение заголовка кнопки авторизации
             this.BtnTitle = 'Войти'
         }else{
             this.BtnTitle = "Регистрация"
         }
         this.emitter.on("EmailIsUsing", data=>{
-            alert("Пользователь с почтой ", data, " уже существует")
+            alert("Пользователь с почтой ", data, " уже существует") //предупреждение при неудачной регистрации
         })
     },
-    updated(){
+    updated(){ //измение заголовка кнопки на измение в окне
         if(this.way == 'auth'){
             this.BtnTitle = 'Войти'
         }else{
             this.BtnTitle = "Регистрация"
         }
     },
-    methods:{
+    methods:{ //пользовательские методы
         authBtnClick(way){
-            this.emitter.emit("StartAuth", {visible: true, way: way})
+            this.emitter.emit("StartAuth", {visible: true, way: way}) //измениеи окна ввода на авторизацию
         },
-        btnBackClick(){
-            ColorChange({backgroundColor: "#090909"})
+        btnBackClick(){//кнопка возвращения на сайт
+            ColorChange({backgroundColor: "#090909"}) //цвет фона элемента body
             this.emitter.emit("StartAuth", {visible: false, way: "back"})
         },
-        EntireBtnClick(){
+        EntireBtnClick(){ //обработка полей ввода
             try{
                 this.alertVisible = false;
                 let em, ps
-                if(this.way == 'auth'){
-                    em = document.getElementById("emInp").value;
+                if(this.way == 'auth'){ //отправка данных авторизации
+                    em = document.getElementById("emInp").value; 
                     ps = document.getElementById("psInp").value;
                     if(em != '' && ps != ''){
                     requestData({
@@ -126,7 +124,7 @@ export default {
                         "password": ps
                     })}
                     else{
-                        this.alertVisible = true;
+                        this.alertVisible = true; //если поля ввода пустые отобразить предупреждение
                     }
                 }else{
                     this.alertVisible = false;
@@ -135,9 +133,9 @@ export default {
                     let fm = document.getElementById("fmInp").value;
                     let nm = document.getElementById("nmInp").value;
                     let ot = document.getElementById("otInp").value;
-                    let pn = document.getElementById("phNum").value;
+                    let pn = document.getElementById("phNum").value; 
                     if(fm != '' && nm != '' && em != '' && ps != ''){
-                        requestData({"type": "Registration", 
+                        requestData({"type": "Registration", //отправка данных регистрации
                         "email": em, 
                         "password": ps, 
                         "registType": "customer", 
@@ -150,12 +148,11 @@ export default {
                         })
                     }
                     else{
-                        this.alertVisible = true;
+                        this.alertVisible = true; //если поля ввода пустые отобразить предупреждение
                     }
                 }   
             }
             catch(e){
-                this.alertVisible = true;
                 console.error(e)
             }
         }
@@ -164,23 +161,28 @@ export default {
 </script>
 
 <style>
+/* обработка наведения на кнопку назад */
 div.goback:hover{
     cursor: pointer;
 }
+/* стиль текста кнопки назад */
 a.backText{
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
     color: #AEAEAE;
 }
+/* размеры курсора указателя назад */
 img.backImg{
     width: 20pt;
     height: auto;
 }
+/* стиль текста предупреждения  */
 p.alertText{
     position: static;
     text-align: center;
 }
+/* стиль кнопки авторизации */
 .registBtn{
     position: relative;
     top: 5%;
@@ -195,67 +197,81 @@ p.alertText{
     font-weight: 700;
     font-size: 17pt;
 }
+/* измение курсора мыши при навдении */
 .registBtn:hover{
     cursor: pointer;
 }
+/* размеры блока авторизации */
 div.authBlo{
     height: 100%;
 }
+/* блок ввода фамилии */
 div.fm{
     width: 100%;
     margin-top: 3%;
 }
+/* блок ввода отчетва */
 div.ot{
     width: 100%;
     margin-top: 3%;
 }
+/* блок ввода имени */
 div.nm{
     width: 100%;
     margin-top: 3%;
 }
+/* блок ввода пароля */
 div.ps{
     width: 100%;
     margin-top: 3%;
 }
+/* блок ввода почты */
 div.em{
     width: 100%;
     margin-top: 3%;
 }
+/* поле ввода имени */
 input.nmInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
+/* поле ввода пароля */
 input.psInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
+/* поле ввода почты */
 input.emInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
+/* поле ввода фамилии */
 input.fmInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
+/* пол ввода отчетсва */
 input.otInp{
     background: #F2F2F2;
     border-style: none;
     width: 40%;
     height: 4vh;
 }
+/* блок ввода данных */
 div.contInput{
     position: relative;
     height: 100%;
     top: 15%;
 }
+/* заголовок блока авторизации */
 h1.authBlockTitle{
     font-family: 'Nunito';
     font-style: normal;
@@ -263,6 +279,7 @@ h1.authBlockTitle{
     color: #53B3D1;
     font-size: 30pt;
 }
+/* блок инпутов */
 div.dataInPart{
     left: 40%;
     width: 60%;
@@ -270,17 +287,20 @@ div.dataInPart{
     position: absolute;
     text-align: center;
 }
+/* блок с логотипом */
 div.logoCont{
     position: relative;
     top: 30pt;
     left: 30pt;
 }
+/* описание заголовка авторизации */
 .h2cont{
     position: absolute;
     left: 10%;
     right: 10%;
     height: auto;
 }
+/* параметры фона блока приветствия */
 div.raindowPart{
     float: left;
     left: 0;
@@ -288,6 +308,7 @@ div.raindowPart{
     height: 100%;
     background: linear-gradient(201.05deg, #55D3EE 10.27%, #8091DF 48.83%, #A953D1 81.95%);
 }
+/* блок ввода данных */
 div.authCont{
     position: fixed;
     top: 10vh;
@@ -296,6 +317,7 @@ div.authCont{
     bottom: 10vh;
     box-shadow: 0px 10px 20px rgba(38, 38, 38, 0.15);
 }
+/* подзаголовок авторизации */
 h2.subTitle{
     text-align: center;
     font-family: 'Nunito';
@@ -304,6 +326,7 @@ h2.subTitle{
     color: #FFFFFF;
     font-size: 20pt;
 }
+/* заголовок авторизации */
 h1.avt{
     font-family: 'Nunito';
     font-style: normal;
@@ -312,14 +335,17 @@ h1.avt{
     color: #FFFFFF;
     text-align: center;
 }
+/* заголовок ввода */
 div.entieTitle{
     position: relative;
     top: 18%;
 }
+/* блок кнопки входа */
 div.entireBtn{
     position: relative;
     text-align: center;
 }
+/* кнопка входа */
 button.entireBtn{
     margin-top: 30pt;
     text-align: center;
@@ -334,6 +360,7 @@ button.entireBtn{
     font-weight: 700;
     font-size: 17pt;
 }
+/* наведение на кнопку входа */
 button.entireBtn:hover{
     cursor: pointer;
 }

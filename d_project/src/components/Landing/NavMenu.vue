@@ -1,46 +1,44 @@
-<template>
+<template> <!-- разметка элемента навигации -->
   <div class="navRoot">
       <div class="leftPart">
         <div class="LogoContainer" @click="navBlockButtonClick('home')">
-            <img class="NavLogo" src="@/assets/logo.png">
+            <img class="NavLogo" src="@/assets/logo.png"> <!-- логотип -->
         </div>
         <div class="navList">
-            <div class="navBlock" @click="navBlockButtonClick('portfolio')">
+            <div class="navBlock" @click="navBlockButtonClick('portfolio')"> <!-- переадресация на страницу портфолио -->
                 <p class="navTitles">Портфолио</p>
             </div>
-            <div class="navBlock" @click="navBlockButtonClick('services')">
+            <div class="navBlock" @click="navBlockButtonClick('services')"> <!-- переадресация на страницу услуг -->
                 <p class="navTitles">Услуги</p>
             </div>
-            <div class="navBlock" @click="navBlockButtonClick('contacts')">
+            <div class="navBlock" @click="navBlockButtonClick('contacts')"> <!-- переадресация на страницу контактов -->
                 <p class="navTitles">Контакты</p>
             </div>
-            <div class="navBlock" @click="navBlockButtonClick('about')">
+            <div class="navBlock" @click="navBlockButtonClick('about')"> <!-- переадресация на страницу о студии -->
                 <p class="navTitles">О студии</p>
             </div>
         </div>
       </div>
       <div class="rightPart">
         <div class="lkButton">
-          <button class="GlobalLogicButtonLk" @click="lkBtnClick()">Личный кабинет</button>
+          <button class="GlobalLogicButtonLk" @click="lkBtnClick()">Личный кабинет</button> <!-- переадресация на окно входа -->
         </div>
       </div>
   </div>
 </template>
-
+<!-- скрипт обработки данных компонента -->
 <script>
-import {checkLoginAndPass} from "../Scripts/CookieRunner.js"
+import {checkLoginAndPass} from "../Scripts/CookieRunner.js" //проверка ранее введенных данных
 export default {
     data(){
-        return{
-
-        }
+        return{}
     },
     methods:{
-        navBlockButtonClick(adress){
+        navBlockButtonClick(adress){ //измение содержимого окна в зависимости от выбранной страницы
             this.emitter.emit("NewPage", adress)
         },
-        lkBtnClick(){
-          if(checkLoginAndPass()){
+        lkBtnClick(){ //открытие окна входа в систему
+          if(checkLoginAndPass()){ 
             this.emitter.emit("StartAuth", {visible: true, way: "regist"})
           }
         }
@@ -50,53 +48,64 @@ export default {
     }
 }
 </script>
-
+<!-- скрипт стилизации компонента -->
 <style>
+/* позиция правой части меню */
 .rightPart{
     position: relative;
     float: right;
     right: 9vw
 }
+/* стилизация текста навигации */
 .navTitles{
     font-size: 24px;
     font-weight: 700;
     font-family: 'Nunito', sans-serif;
     color: white;
 }
+/* пункты меню */
 .navList{
   position: relative;
   left: 4vw;
   display: table-cell;
 }
+/* стилизация левой части меню */
 .leftPart{
     margin-left: 22%;
     float: left;
     display: table;
 }
+/* блок логотипа */
 .LogoContainer{
     position: absolute;
     left: 11.5vw;
     top: 20%;
 }
+/* стилизация курсора при наведении на логотип */
 .NavLogo:hover{
     cursor: pointer;
 }
+/* позиционирование блока навигации */
 .navBlock{
     float: left;
     width: 11vw;
     text-align: center;
 }
+/* изменение курсора  */
 .navBlock:hover{
     cursor: pointer;
 }
+/* стили кнопки входа в личный кабинет */
 .lkButton{
     text-align: center;
     position: relative;
     top: 1.5vh;
 }
+/* изменение курсора при навдении */
 .lkButton:hover{
   cursor: pointer;
 }
+/* стилизация кнопки личного кабинета */
 .GlobalLogicButtonLk, .GlobalLogicButtonLk::after {
     width: 14vw;
     height:5.5vh;
@@ -114,9 +123,11 @@ export default {
     outline: transparent;
     position: relative;
 }
+/* курсор при наведении мыши */
 .GlobalLogicButtonLk:hover{
   cursor: pointer;
 }
+/* стилизация кнопки при взаимодейтсвии */
 .GlobalLogicButtonLk::after {
   --slice-0: inset(50% 50% 50% 50%);
   --slice-1: inset(80% -6px 0 0);
@@ -136,12 +147,12 @@ export default {
   text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
   clip-path: var(--slice-0);
 }
-
+/* стилизация кнопки после взаимодействия */
 .GlobalLogicButtonLk:hover::after {
   animation: 1s glitch;
   animation-timing-function: steps(2, end);
 }
-
+/* фрейм анимации кнопки */
 @keyframes glitch {
   0% {
     clip-path: var(--slice-1);

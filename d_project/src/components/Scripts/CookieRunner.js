@@ -1,3 +1,3 @@
-export function checkLoginAndPass(){
-    return true
+export function checkLoginAndPass(){ //проверка ранее введенных данных
+    return true //чтение из cookie
 }

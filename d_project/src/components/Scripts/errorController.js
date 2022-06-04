@@ -1,4 +1,4 @@
-export default function(error){
-    alert(error);
-    console.log(error)
+export default function(error, data){
+    alert(error); //отображение полученной ошибки
+    console.log(data)
 }

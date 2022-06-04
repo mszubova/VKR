@@ -1,24 +1,26 @@
-<template>
+<!-- разметка главного компонента -->
+<template> 
   <div class="mainRoot">
         <div id="homePg">
-            <preview-block v-if="pagesVisibility.home"></preview-block>
+            <preview-block v-if="pagesVisibility.home"></preview-block> <!-- стартовая страница -->
         </div>
         <div id="portfolioPg">
-            <portfolio-page v-if="pagesVisibility.portfolio"></portfolio-page>
+            <portfolio-page v-if="pagesVisibility.portfolio"></portfolio-page> <!-- страница портфолио -->
         </div>
         <div id="servicesPg">
-            <services-page v-if="pagesVisibility.services"></services-page>
+            <services-page v-if="pagesVisibility.services"></services-page> <!-- страница услуг -->
         </div>
         <div id="contactPG">
-            <contacts-page v-if="pagesVisibility.contacts"></contacts-page>
+            <contacts-page v-if="pagesVisibility.contacts"></contacts-page> <!-- страница контактов -->
         </div>
         <div id="aboutPg">
-            <about-page v-if="pagesVisibility.about"></about-page>
+            <about-page v-if="pagesVisibility.about"></about-page> <!-- страница о нас -->
         </div>
   </div>
 </template>
-
+<!-- скрипт обработки компонета -->
 <script>
+//импорт компонентов для размещения на странице
 import PreviewBlock from './functionalComponents/PreviewBlock.vue'
 import PortfolioPage from './functionalComponents/PortfolioPage.vue'
 import ServicesPage from './functionalComponents/ServicesPage.vue'
@@ -27,7 +29,7 @@ import AboutPage from './functionalComponents/AboutPage.vue'
 export default {
     data(){
         return{
-            pagesVisibility:{
+            pagesVisibility:{ //статус видимости окон
                 home: true,
                 portfolio: false,
                 services: false,
@@ -37,14 +39,14 @@ export default {
             onDisplay: 'home'
         }
     },
-    components:{
+    components:{ //импортированные компоненты
         PreviewBlock,
         PortfolioPage,
         ServicesPage,
         ContactsPage,
         AboutPage
     },
-    created: function(){
+    created: function(){ //обработка видимости компонентов при смене из меню навигации
         this.emitter.on("NewPage", page => {
             this.pagesVisibility[this.onDisplay] = false;
             this.pagesVisibility[page] = true;
@@ -53,10 +55,9 @@ export default {
     }
 }
 </script>
-
+<!-- стилизация компонента -->
 <style>
 .mainRoot{
     position: relative;
 }
-
 </style>
