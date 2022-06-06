@@ -88,6 +88,8 @@ div.wa{
   height: 91vh;
   top: 9vh;
   left: 240pt;
+  overflow: auto;
+  overflow-x: hidden;
 }
 div.logoCont{
   position: absolute;

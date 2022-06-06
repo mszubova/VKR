@@ -5,14 +5,19 @@
           <a class="menuPoint" @click="selected(0)" >ПАНЕЛЬ УПРАВЛЕНИЯ</a>
         </li>
         <li class="point">
-          <a class="menuPoint" @click="selected(1)">ИСТОРИЯ ЗАКАЗОВ</a>
+          <a class="menuPoint" @click="historyParamVisible = !historyParamVisible">ИСТОРИЯ ЗАКАЗОВ</a>
           <ul class="historyParam" v-show="historyParamVisible">
-            <li class="subPoint" @click="selected(1, 0)">ОТКЛОНЕННЫЕ ЗАЯВКИ</li>
             <li class="subPoint" @click="selected(1, 1)">ВСЕ ЗАЯВКИ</li>
+            <li class="subPoint" @click="selected(1, 0)">ОТКЛОНЕННЫЕ ЗАЯВКИ</li>
+            <li class="subPoint" @click="selected(1, 2)">ЗАВЕРШЕННЫЕ</li>
           </ul>
         </li>
         <li class="point">
-          <a class="menuPoint" @click="selected(2)">СОТРУДНИКИ</a>
+          <a class="menuPoint" @click="employeeVisible = !employeeVisible">СОТРУДНИКИ</a>
+          <ul class="historyParam" v-show="employeeVisible">
+            <li class="subPoint" @click="selected(2, 0)">ВСЕ СОТРУДНИКИ</li>
+            <li class="subPoint" @click="selected(2, 1)">ДОБАВЛЕНИЕ СОТРУДНИКА</li>
+          </ul>
         </li>
         <li class="point">
           <a class="menuPoint"  @click="selected(3)" >НАСТРОЙКИ</a>
@@ -30,7 +35,8 @@ export default {
       selectHistory: false,
       selectEmployee: false,
       selectSettings: false,
-      historyParamVisible: false
+      historyParamVisible: false,
+      employeeVisible: false
     }
   },
   mounted: function(){
@@ -59,12 +65,24 @@ export default {
             this.selectHistory = true;
             this.emitter.emit("updateControlComponent", [num, 'all'])
           }
+          if(subPoint == 2){
+            this.selectHistory = true;
+            this.emitter.emit("updateControlComponent", [num, 'final'])
+          }
           break;
         case 2:
-          this.hideElem();
-          this.emitter.emit("Title", 'Сотрудники')
-          this.selectEmployee = true;
-          this.emitter.emit("updateControlComponent", num)
+          if(subPoint == 0){
+            this.hideElem();
+            this.emitter.emit("Title", 'Сотрудники')
+            this.selectEmployee = true;
+            this.emitter.emit("updateControlComponent", num)
+          }
+          if(subPoint == 1){
+            this.hideElem();
+            this.emitter.emit("Title", 'Добавление сотрудника')
+            this.selectEmployee = true;
+            this.emitter.emit("updateControlComponent", num)
+          }
           break;
         case 3:
           this.hideElem()

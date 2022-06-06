@@ -14,6 +14,7 @@ if (response.ok) {
   let json = await response.json();
   console.log(json);
   emitter.emit("ControlPanelData", json)
+  emitter.emit("EmployeeList", json)
   return(json);
 } else {
   console.log("Ошибка HTTP: " + response.status);

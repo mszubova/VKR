@@ -2,31 +2,36 @@
   <div class="contPanelRoot">
     <div class="innerCont">
       <h1 class="title">{{title}}</h1>
-      <div class="orders" v-for="n in orders" :key="n">
-        <div class="ord" >
-          <div class="left">
-            <h3 class="ordData">Название: {{n['name']}}</h3>
+      <employee-page v-if="title == 'Сотрудники'"></employee-page>
+      <add-employee v-if="title == 'Добавление сотрудника'"></add-employee>
+      <div v-if="title == 'Панель управления' || title == 'История заказов'" class="CPr">
+        <div class="orders" v-for="n in orders" :key="n">
+          <div class="ord" >
+            <div class="left">
+              <h3 class="ordData">Название: {{n['name']}}</h3>
+            </div>
+            <div class="middle" v-if="n['finishDate'] != null">
+              <h3 class="ordData">Дата окончания: {{n['finishDate']}}</h3>
+            </div>
+            <div class="right">
+              <h3 class="ordData">Дата начала: {{n['startDate']}}</h3>
+              <h3 class="ordData">Статус: {{n['idStage']}}</h3>
+              <a class="open" @click="n['visible'] = !n['visible']">Просмотреть полностью</a>
+            </div>
+            <div class="desc" v-if="n['visible']">
+            <h3 class="ordData">Описание: {{n['description']}}</h3>
+              <h3 class="ordData">Бюджет: {{n['budget']}}</h3>
+            <div class="ordBtn" v-if="n['idStage'] == 'В обработке'">
+            <div class="accept">
+              <a class="accept" @click="acceptOrder(n['id'], true)">Принять</a>
+            </div>
+            <div class="reject">
+              <a class="reject" @click="acceptOrder(n['id'], false)">Отклонить</a> 
+            </div>
+            </div> 
+            </div>      
           </div>
-          <div class="middle" v-if="n['finishDate'] != null">
-            <h3 class="ordData">Дата окончания: {{n['finishDate']}}</h3>
           </div>
-          <div class="right">
-            <h3 class="ordData">Дата начала: {{n['startDate']}}</h3>
-            <h3 class="ordData">Статус: {{n['idStage']}}</h3>
-            <a class="open" @click="n['visible'] = !n['visible']">Просмотреть полностью</a>
-          </div>
-          <div class="desc" v-if="n['visible']">
-          <h3 class="ordData">Описание: {{n['description']}}</h3>
-          <div class="ordBtn" v-if="n['idStage'] == 'В обработке'">
-          <div class="accept">
-            <a class="accept" @click="acceptOrder(n['id'], true)">Принять</a>
-          </div>
-          <div class="reject">
-            <a class="reject" @click="acceptOrder(n['id'], false)">Отклонить</a> 
-          </div>
-          </div> 
-          </div>      
-        </div>
       </div>
     </div>
   </div>
@@ -35,64 +40,78 @@
 <script>
 import { requestData } from '../Script/request';
 import readCookies from '../Script/readCookies';
+import employeePageVue from './EmployeePage.vue';
+import AddEmployee from './AddEmployee.vue';
 export default {
-  props:{
-    componentData: Array,
-    title: String
+  components:{
+    "employee-page": employeePageVue,
+    AddEmployee
   },
-  data(){
-    return{
-      orders:[]
-    }
-  },
-  methods:{
-    acceptOrder(id, status){
-    this.orders =   requestData({
-    "type": "acceptOrder",
-    "projectId": id,
-    "status": status,
-    "email": readCookies('email')
-})
+    props: {
+        componentData: Array,
+        title: String
     },
-    jsonToRequest(json){requestData(json)}
-  },
- created(){
-    this.emitter.on("updateControlComponent", data=>{
-      switch(data[0]){
-        case 0:
-          this.jsonToRequest({
-        "type":"viewOrder",
-        "email": readCookies('email'),
-        "ordStatus": "accepted"
-        })
-          break;
-        case 1:
-          if(data[1]=='all'){
-            this.jsonToRequest({
-        "type":"viewOrder",
-        "email": readCookies('email'),
-        "ordStatus": "all"
-        })}
-         if(data[1]=='rejected'){
-            this.jsonToRequest({
-        "type":"viewOrder",
-        "email": readCookies('email'),
-        "ordStatus": "rejected"
-        })
-        }
-      }
-    })
-    this.emitter.on("ControlPanelData", data =>{
-      this.orders = data
-    })
- }
+    data() {
+        return {
+            orders: []
+        };
+    },
+    methods: {
+        acceptOrder(id, status) {
+            this.orders = requestData({
+                "type": "acceptOrder",
+                "projectId": id,
+                "status": status,
+                "email": readCookies("email")
+            });
+        },
+        jsonToRequest(json) { requestData(json); }
+    },
+    created() {
+        this.emitter.on("updateControlComponent", data => {
+            switch (data[0]) {
+                case 0:
+                    this.jsonToRequest({
+                        "type": "viewOrder",
+                        "email": readCookies("email"),
+                        "ordStatus": "inWork"
+                    });
+                    break;
+                case 1:
+                    if (data[1] == "all") {
+                        this.jsonToRequest({
+                            "type": "viewOrder",
+                            "email": readCookies("email"),
+                            "ordStatus": "all"
+                        });
+                    }
+                    if (data[1] == "rejected") {
+                        this.jsonToRequest({
+                            "type": "viewOrder",
+                            "email": readCookies("email"),
+                            "ordStatus": "rejected"
+                        });
+                    }
+                    if (data[1] == "final") {
+                        this.jsonToRequest({
+                            "type": "viewOrder",
+                            "email": readCookies("email"),
+                            "ordStatus": "final"
+                        });
+                    }
+            }
+        });
+        this.emitter.on("ControlPanelData", data => {
+            this.orders = data;
+        });
+    },
 }
 </script>
 
 <style>
 div.ordBtn{
   float: left;
-  left: 10%;
+  left: 15%;
   width: 50%;
   padding-bottom: 1%;
   padding-left: 3%;
@@ -157,7 +176,7 @@ width: 100%;
 }
 div.left{
   float: left;
-  width: 100%;
+  width: 93%;
 }
 h3.ordTitle{
   position: relative;
@@ -179,6 +198,7 @@ div.ord{
 }
 h3.ordData{
   position: relative;
+  width: 90%;
   left: 30pt;
   font-family: 'Ubuntu';
   font-style: normal;
@@ -212,7 +232,5 @@ h1.title{
 div.contPanelRoot{
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 </style>
