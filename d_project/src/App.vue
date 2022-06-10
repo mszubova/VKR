@@ -1,7 +1,7 @@
 <template>
   <div class="appRoot">
     <div class="authPage" v-if="visibilityAuth">
-      <auth-page :way="way"></auth-page>
+      <auth-page :way="way" :order="order"></auth-page>
     </div>
     <div class="landing" v-if="!visibilityAuth">
         <div class="void"></div>
@@ -27,6 +27,7 @@ export default {
     return{
       visibilityAuth: false,
       way: String,
+      order: Boolean
     }
   },
   components:{
@@ -42,6 +43,7 @@ export default {
         }
         else if(data['way'] == 'auth'){
           this.way = data['way'];
+          this.order = true
         }
         this.visibilityAuth = data['visible'];
     })

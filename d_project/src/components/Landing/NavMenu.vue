@@ -6,16 +6,16 @@
         </div>
         <div class="navList">
             <div class="navBlock" @click="navBlockButtonClick('portfolio')"> <!-- переадресация на страницу портфолио -->
-                <p class="navTitles">Портфолио</p>
+                <p class="navTitles" id="portfolio">Портфолио</p>
             </div>
             <div class="navBlock" @click="navBlockButtonClick('services')"> <!-- переадресация на страницу услуг -->
-                <p class="navTitles">Услуги</p>
+                <p class="navTitles" id="services">Услуги</p>
             </div>
             <div class="navBlock" @click="navBlockButtonClick('contacts')"> <!-- переадресация на страницу контактов -->
-                <p class="navTitles">Контакты</p>
+                <p class="navTitles" id="contacts">Контакты</p>
             </div>
             <div class="navBlock" @click="navBlockButtonClick('about')"> <!-- переадресация на страницу о студии -->
-                <p class="navTitles">О студии</p>
+                <p class="navTitles" id="about">О студии</p>
             </div>
         </div>
       </div>
@@ -35,11 +35,26 @@ export default {
     },
     methods:{
         navBlockButtonClick(adress){ //измение содержимого окна в зависимости от выбранной страницы
+            this.letsWhite();
             this.emitter.emit("NewPage", adress)
+            if(adress != 'home'){
+              let paint = document.getElementById(adress);
+            paint.style.color = '#CA57FF'
+            }
+        },
+        letsWhite(){
+          let paint = document.getElementById('portfolio');
+            paint.style.color = '#FFFFFF'
+          paint = document.getElementById('services');
+            paint.style.color = '#FFFFFF'
+          paint = document.getElementById('contacts');
+            paint.style.color = '#FFFFFF'
+          paint = document.getElementById('about');
+            paint.style.color = '#FFFFFF'
         },
         lkBtnClick(){ //открытие окна входа в систему
           if(checkLoginAndPass()){ 
-            this.emitter.emit("StartAuth", {visible: true, way: "regist"})
+            this.emitter.emit("StartAuth", {visible: true, way: "auth"})
           }
         }
     },

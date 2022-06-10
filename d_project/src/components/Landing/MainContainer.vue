@@ -18,7 +18,7 @@
         </div>
   </div>
 </template>
-<!-- скрипт обработки компонета -->
+<!-- скрипт обработки данных компонета -->
 <script>
 //импорт компонентов для размещения на странице
 import PreviewBlock from './functionalComponents/PreviewBlock.vue'

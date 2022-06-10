@@ -28,7 +28,7 @@
                     </div>
                 </div>
           </div>
-          <div class="dataInPart">
+          <div v-if="station" class="dataInPart">
               <div class="contInput">
                   <div class="ttitle" v-if="way == 'auth'"> <!-- смена заголовка в зависимости от выбора пути -->
                     <h1 class="authBlockTitle">Авторизация</h1>
@@ -64,28 +64,36 @@
                 <button class="registBtn" @click="EntireBtnClick()">{{BtnTitle}}</button> <!-- вызов метода для отправки запроса -->
             </div>
           </div>
+          <new-order v-else></new-order>
       </div>
   </div>
 </template>
 
 <script>
+import newOrderVue from './Landing/functionalComponents/newOrder.vue'
 import ColorChange from "./Scripts/ColorChange" //метод изменения цвета фона body
 import { requestData } from "./Scripts/Connect" //метод отправки и обработки запросов
 export default {
     props:{
-        way: String //принимаемый родительским копонентом параметр
+        way: String, //принимаемый родительским копонентом параметр
+        order: Boolean
+    },
+    components:{
+        "new-order": newOrderVue
     },
     data(){
         return{
             alertVisible: false, //параметр видимости предупреждния
             title: '', //заголовок окна
-            BtnTitle: '' //заголовок кнопки авторизации
+            BtnTitle: '', //заголовок кнопки авторизации
+            station: true
         }
     },
     beforeCreate: function(){
         ColorChange({backgroundColor: "white"}) //изменение цвета элемента body перед созданием окна 
     },
     created(){
+        //////////////////////////////////////////ewedfndskjfn//////////////////////////////////////////////////////
         if(this.way == 'auth'){ //измение заголовка кнопки авторизации
             this.BtnTitle = 'Войти'
         }else{
@@ -103,6 +111,12 @@ export default {
         }
     },
     methods:{ //пользовательские методы
+        orderField(){
+            if(this.order){
+                this.station = false
+            }
+            return false;
+        },
         authBtnClick(way){
             this.emitter.emit("StartAuth", {visible: true, way: way}) //измениеи окна ввода на авторизацию
         },
@@ -118,11 +132,21 @@ export default {
                     em = document.getElementById("emInp").value; 
                     ps = document.getElementById("psInp").value;
                     if(em != '' && ps != ''){
-                    requestData({
+                        if(this.orderField()){
+                            requestData({
                         "type": "Authorization",
                         "email": em, 
                         "password": ps
-                    })}
+                    })
+                        }
+                        else{
+                            requestData({
+                        "type": "Authorization",
+                        "email": em, 
+                        "password": ps
+                    })
+                        }
+                    }
                     else{
                         this.alertVisible = true; //если поля ввода пустые отобразить предупреждение
                     }
@@ -135,6 +159,7 @@ export default {
                     let ot = document.getElementById("otInp").value;
                     let pn = document.getElementById("phNum").value; 
                     if(fm != '' && nm != '' && em != '' && ps != ''){
+                        
                         requestData({"type": "Registration", //отправка данных регистрации
                         "email": em, 
                         "password": ps, 
