@@ -16,6 +16,7 @@
         <div id="aboutPg">
             <about-page v-if="pagesVisibility.about"></about-page> <!-- страница о нас -->
         </div>
+        <div class="bottomCircle"></div>
   </div>
 </template>
 <!-- скрипт обработки данных компонета -->
