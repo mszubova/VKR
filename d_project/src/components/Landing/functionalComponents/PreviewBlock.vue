@@ -3,7 +3,7 @@
     <div class="onDislpay">
       <div class="title">
       <div class="raindowTitle">
-        <h2 class="rnbTl">PROGRESS center - это агенство </h2>
+        <h2 class="rnbTl">PROGRESS center - это агентство </h2>
         <h2 class="rnbTl">комплексного маркетинга</h2>
       </div>
       <div class="descript">

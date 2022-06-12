@@ -1,7 +1,7 @@
 <template>
   <div class="appRoot">
     <div class="authPage" v-if="visibilityAuth">
-      <auth-page :way="way" :order="order"></auth-page>
+      <auth-page :way="way"></auth-page>
     </div>
     <div class="landing" v-if="!visibilityAuth">
         <div class="void"></div>
@@ -22,6 +22,7 @@ import ColorChange from "./components/Scripts/ColorChange"
 import navMenu from "./components/Landing/NavMenu.vue"
 import mainContainer from "./components/Landing/MainContainer.vue"
 import AuthPageVue from "./components/AuthPage.vue"
+import {setOrderStatus} from "@/components/Scripts/Connect.js" 
 export default {
   data(){
     return{
@@ -42,8 +43,8 @@ export default {
           this.way = data['way'];
         }
         else if(data['way'] == 'auth'){
+          setOrderStatus()
           this.way = data['way'];
-          this.order = true
         }
         this.visibilityAuth = data['visible'];
     })
@@ -58,7 +59,6 @@ export default {
 
 html{
   overflow-x: hidden;
-  
 }
 .void{
   position: fixed;

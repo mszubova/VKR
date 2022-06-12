@@ -17,6 +17,7 @@
             <about-page v-if="pagesVisibility.about"></about-page> <!-- страница о нас -->
         </div>
         <div class="bottomCircle"></div>
+    <img class="circles" src="@/assets/circles.png"/>
   </div>
 </template>
 <!-- скрипт обработки данных компонета -->
@@ -60,5 +61,11 @@ export default {
 <style>
 .mainRoot{
     position: relative;
+}
+img.circles{
+    position: fixed;
+    top: 50%;
+    z-index: -1;
+    left: -1%;
 }
 </style>

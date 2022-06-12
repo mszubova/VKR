@@ -14,7 +14,7 @@
                     <div class="h2cont">
                         <h2 class="subTitle">Для продолжения работы с нами, вы должны быть зарегестрированы в системе.</h2>
                     <div class="entireBtn">
-                        <button @click="authBtnClick('regist')" class="entireBtn">Зарегестрироваться</button>
+                        <button @click="authBtnClick('regist')" class="entireBtn">Зарегистрироваться</button>
                     </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
           </div>
-          <div v-if="station" class="dataInPart">
+          <div class="dataInPart">
               <div class="contInput">
                   <div class="ttitle" v-if="way == 'auth'"> <!-- смена заголовка в зависимости от выбора пути -->
                     <h1 class="authBlockTitle">Авторизация</h1>
@@ -40,23 +40,23 @@
                     <div class="authBlo" >
                     <div class="auth" v-if="way == 'regist'"> <!-- поля ввода для регистрации -->
                         <div class="fm">
-                            <input id="fmInp" class="fmInp" type="text" placeholder="Фамилия" />
+                            <input id="fmInp" name="lname" class="fmInp" type="text" placeholder="Фамилия" />
                         </div>
                         <div class="nm">
-                            <input id="nmInp" class="fmInp" type="text" placeholder="Имя" />
+                            <input id="nmInp" name="fname" class="fmInp" type="text" placeholder="Имя" />
                         </div>
                         <div class="ot">
-                            <input id="otInp" class="fmInp" type="text" placeholder="Отчетство" />
+                            <input id="otInp" name="lname" class="fmInp" type="text" placeholder="Отчетство" />
                         </div>
                         <div class="ps">
                             <input id="phNum" class="fmInp" type="text" placeholder="Номер телефона" />
                         </div>
                     </div>
                         <div class="em"> <!-- поля ввода для регистрации и авторизации -->
-                            <input id="emInp" class="fmInp" type="text" placeholder="Эл. почта" />
+                            <input id="emInp" name="email" class="fmInp" type="text" placeholder="Эл. почта" autocomplete="on"/>
                         </div>
                         <div class="ps">
-                            <input id="psInp" class="fmInp" type="password" placeholder="Пароль" />
+                            <input id="psInp" class="fmInp" type="password" placeholder="Пароль" v-on:keyup.enter="EntireBtnClick()"/>
                         </div>
                     </div>
                 </div>
@@ -64,13 +64,11 @@
                 <button class="registBtn" @click="EntireBtnClick()">{{BtnTitle}}</button> <!-- вызов метода для отправки запроса -->
             </div>
           </div>
-          <new-order v-else></new-order>
       </div>
   </div>
 </template>
 
 <script>
-import newOrderVue from './Landing/functionalComponents/newOrder.vue'
 import ColorChange from "./Scripts/ColorChange" //метод изменения цвета фона body
 import { requestData } from "./Scripts/Connect" //метод отправки и обработки запросов
 export default {
@@ -79,21 +77,18 @@ export default {
         order: Boolean
     },
     components:{
-        "new-order": newOrderVue
     },
     data(){
         return{
             alertVisible: false, //параметр видимости предупреждния
             title: '', //заголовок окна
             BtnTitle: '', //заголовок кнопки авторизации
-            station: true
         }
     },
     beforeCreate: function(){
         ColorChange({backgroundColor: "white"}) //изменение цвета элемента body перед созданием окна 
     },
     created(){
-        //////////////////////////////////////////ewedfndskjfn//////////////////////////////////////////////////////
         if(this.way == 'auth'){ //измение заголовка кнопки авторизации
             this.BtnTitle = 'Войти'
         }else{
@@ -111,12 +106,6 @@ export default {
         }
     },
     methods:{ //пользовательские методы
-        orderField(){
-            if(this.order){
-                this.station = false
-            }
-            return false;
-        },
         authBtnClick(way){
             this.emitter.emit("StartAuth", {visible: true, way: way}) //измениеи окна ввода на авторизацию
         },
@@ -132,20 +121,11 @@ export default {
                     em = document.getElementById("emInp").value; 
                     ps = document.getElementById("psInp").value;
                     if(em != '' && ps != ''){
-                        if(this.orderField()){
-                            requestData({
+                      requestData({
                         "type": "Authorization",
                         "email": em, 
                         "password": ps
                     })
-                        }
-                        else{
-                            requestData({
-                        "type": "Authorization",
-                        "email": em, 
-                        "password": ps
-                    })
-                        }
                     }
                     else{
                         this.alertVisible = true; //если поля ввода пустые отобразить предупреждение
@@ -190,16 +170,25 @@ export default {
 div.goback:hover{
     cursor: pointer;
 }
+div.goback{
+    position: absolute;
+    top: 7.2vh;
+    left: 10vw;
+}
 /* стиль текста кнопки назад */
 a.backText{
+    position: relative;
+    margin-left: 5pt;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
+    font-size: 13pt;
     color: #AEAEAE;
 }
 /* размеры курсора указателя назад */
 img.backImg{
-    width: 20pt;
+    position: relative;
+    width: 14pt;
     height: auto;
 }
 /* стиль текста предупреждения  */

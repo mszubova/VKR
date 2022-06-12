@@ -1,5 +1,10 @@
 import errorController from './errorController.js' //обработчик ошибок
 import { emitter } from '@/main.js'; //сонтроллер событий
+export let orderStatus = null
+export function setOrderStatus(){
+  orderStatus = true
+}
+
 export async function requestData(data){
 let response = await fetch("http://geetech.store/mainController.php",{ //Создание нового запроса
     method: "POST", //метод отправки запроса
@@ -41,6 +46,12 @@ async function redirect(data){
     document.cookie = encodeURIComponent('name') + '=' + encodeURIComponent(data['name']);
     document.cookie = encodeURIComponent('role') + '=' + encodeURIComponent(data['role']);
     document.cookie = encodeURIComponent('email') + '=' + encodeURIComponent(data['email']);
+    if(orderStatus){
+      document.cookie = encodeURIComponent('way') + '=' + encodeURIComponent('neworder');
+    }
+    else{
+      document.cookie = encodeURIComponent('way') + '=' + encodeURIComponent('default');
+    }
     window.location.href = '/person.html?&'+data['name'] //перенаправлние на person.html с сохранием имени в строке поиска
   }
   catch(e){

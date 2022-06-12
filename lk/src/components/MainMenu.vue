@@ -4,7 +4,7 @@
         <li class="point">
           <a class="menuPoint" @click="selected(0)" >ПАНЕЛЬ УПРАВЛЕНИЯ</a>
         </li>
-        <li class="point">
+        <li class="point" v-if="role == 'admin'">
           <a class="menuPoint" @click="historyParamVisible = !historyParamVisible">ИСТОРИЯ ЗАКАЗОВ</a>
           <ul class="historyParam" v-show="historyParamVisible">
             <li class="subPoint" @click="selected(1, 1)">ВСЕ ЗАЯВКИ</li>
@@ -12,7 +12,16 @@
             <li class="subPoint" @click="selected(1, 2)">ЗАВЕРШЕННЫЕ</li>
           </ul>
         </li>
-        <li class="point">
+        <li class="point" v-if="role == 'customer'">
+          <a class="menuPoint" @click="customerOrders = !customerOrders">МОИ ЗАКАЗЫ</a>
+          <ul class="historyParam" v-show="customerOrders">
+            <li class="subPoint" @click="selected(4, 0)">В разработке</li>
+            <li class="subPoint" @click="selected(4, 1)">История заказов</li>
+            <li class="subPoint" @click="selected(4, 2)">Требует оплаты</li>
+            <li class="subPoint" @click="selected(4, 3)">Отказано</li>
+          </ul>
+        </li>
+        <li class="point" v-if="role == 'admin'">
           <a class="menuPoint" @click="employeeVisible = !employeeVisible">СОТРУДНИКИ</a>
           <ul class="historyParam" v-show="employeeVisible">
             <li class="subPoint" @click="selected(2, 0)">ВСЕ СОТРУДНИКИ</li>
@@ -23,20 +32,23 @@
           <a class="menuPoint"  @click="selected(3)" >НАСТРОЙКИ</a>
         </li>
       </div>
-  </div>
+    </div>
 </template>
 
 <script>
+import readCookies from './Script/readCookies'
 export default {
   data(){
     return{
+      role: String,
       name: String,
       selectPanel: true,
       selectHistory: false,
       selectEmployee: false,
       selectSettings: false,
       historyParamVisible: false,
-      employeeVisible: false
+      employeeVisible: false,
+      customerOrders: false
     }
   },
   mounted: function(){
@@ -45,7 +57,6 @@ export default {
   },
   methods:{
     selected(num, subPoint){
-      this.historyParamVisible = false
       switch (num){
         case 0:
           this.hideElem();
@@ -90,6 +101,28 @@ export default {
           this.selectSettings = true;
           this.emitter.emit("updateControlComponent", num)
           break;
+        case 4:
+          this.customerOrders = true;
+          switch (subPoint){
+            case 0:
+              this.emitter.emit("Title", "Заказы в разработке")
+              this.emitter.emit("updateControlComponent", [num, 'inProgress'])
+              break;
+            case 1:
+              this.emitter.emit("Title", "История заказов")
+              this.emitter.emit("updateControlComponent", [num, 'all'])
+              break;
+            case 2:
+              this.emitter.emit("Title", "Заказы требующие оплаты")
+              this.emitter.emit("updateControlComponent", [num, 'makeBuy'])
+              break;
+            case 3:
+              this.emitter.emit("Title", "Отклоненные проекты")
+              this.emitter.emit("updateControlComponent", [num, 'final'])
+              break;
+            default:
+              this.customerOrders = !this.customerOrders
+          }
       }
     },
     hideElem(){
@@ -100,13 +133,12 @@ export default {
     }
   },
   created(){
+    this.role = readCookies('role')
   }
 }
 </script>
 
 <style>
-div.point{
-}
 .historyParam{
   position: relative;
 }

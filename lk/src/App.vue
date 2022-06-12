@@ -10,7 +10,7 @@
         <top-menu :name="name" :role="role"></top-menu>
       </div>
       <div class="wa">
-        <work-area></work-area>
+        <work-area :way="way"></work-area>
       </div>
   </div>
 </template>
@@ -26,12 +26,19 @@ export default {
     return{
       name: String,
       role: String,
+      way: String
     }
   },
   components: {
     "main-menu": MainMenuVue,
     "top-menu": TopMenu,
     "work-area": WorkAreaVue
+  },
+  beforeCreate(){
+    if(readCookies('role') == 'customer'){
+      this.way = readCookies('way')
+    }
+    this.way = readCookies('default')
   },
   mounted: function(){
     try{
@@ -90,6 +97,7 @@ div.wa{
   left: 240pt;
   overflow: auto;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 div.logoCont{
   position: absolute;
